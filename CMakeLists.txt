@@ -1,6 +1,10 @@
 zephyr_include_directories(include)
 zephyr_library()
 
+list(APPEND CMAKE_MODULE_PATH ${ZEPHYR_BASE}/modules/nanopb)
+include(nanopb)
+set(NANOPB_GENERATE_CPP_STANDALONE OFF)
+
 nanopb_generate_cpp(bridge_proto_srcs bridge_proto_hdrs RELPATH .
                     proto/core.proto
 )
