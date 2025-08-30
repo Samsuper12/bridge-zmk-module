@@ -6,8 +6,8 @@ message Request {
     uint32 request_id = 1;
 
     oneof request_type {
-        bool get_device_info = 1;
-        bool reset_settings = 2;
+        bool get_device_info = 2;
+        bool reset_settings = 3;
     }
 }
 
