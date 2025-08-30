@@ -1,3 +1,20 @@
 config ZMK_BRIDGE
     bool "Enable ZMK Bridge module support for a board"
     default n
+
+config ZMK_BRIDGE_RX_BUF_SIZE
+    int
+    default 32
+
+config ZMK_BRIDGE_TX_BUF_SIZE
+    int
+    default 64
+
+config ZMK_BRIDGE_TRANSPORT_UART_RX_STACK_SIZE
+    int "RX Stack Size"
+    depends on !UART_INTERRUPT_DRIVEN
+    default 512
+
+config ZMK_BRIDGE_THREAD_STACK_SIZE
+    int "Bridge Thread Stack Size"
+    default 4096
