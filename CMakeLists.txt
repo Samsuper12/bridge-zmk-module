@@ -18,3 +18,5 @@ zephyr_library_sources(
     src/events/bridge_event.c
 )
 
+zephyr_library_link_libraries(nanopb)
+
