@@ -1,7 +1,7 @@
 zephyr_include_directories(include)
 zephyr_library()
 
-list(APPEND CMAKE_MODULE_PATH ${ZEPHYR_BASE}/modules/nanopb)
+zephyr_include_directories(${ZEPHYR_BASE}/modules/lib/nanopb)
 include(nanopb)
 set(NANOPB_GENERATE_CPP_STANDALONE OFF)
 
