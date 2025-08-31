@@ -2,6 +2,8 @@ name: bridge-zmk-module
 build:
   cmake: .
   kconfig: Kconfig
+  depends:
+    - nanopb
   settings:
     dts_root: .
     snippet_root:  .
