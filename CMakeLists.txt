@@ -5,8 +5,8 @@ list(APPEND CMAKE_MODULE_PATH ${ZEPHYR_BASE}/modules/nanopb)
 include(nanopb)
 set(NANOPB_GENERATE_CPP_STANDALONE OFF)
 
-zephyr_nanopb_sources(${CMAKE_CURRENT_SOURCE_DIR}/proto 
-${CMAKE_CURRENT_SOURCE_DIR}/proto/core.proto
+zephyr_nanopb_sources(${ZEPHYR_CURRENT_LIBRARY} 
+    proto/core.proto
 )
 
 #nanopb_generate_cpp(bridge_proto_srcs bridge_proto_hdrs RELPATH ${CMAKE_CURRENT_SOURCE_DIR}
