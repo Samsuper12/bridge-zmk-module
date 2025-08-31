@@ -1,6 +1,11 @@
-config ZMK_BRIDGE
+menuconfig ZMK_BRIDGE
     bool "Enable ZMK Bridge module support for a board"
-    default n
+    select NANOPB
+    imply NANOPB_NO_ERRMSG
+    imply NANOPB_WITHOUT_64BIT
+    imply NANOPB_NO_ENCODE_SIZE_CHECK
+    select RING_BUFFER
+    select SETTINGS
 
 config ZMK_BRIDGE_RX_BUF_SIZE
     int
