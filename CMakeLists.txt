@@ -16,6 +16,8 @@ nanopb_generate_cpp(proto_bridge_srcs proto_bridge_hdrs RELPATH ${ZEPHYR_CURRENT
 ${ZEPHYR_CURRENT_MODULE_DIR}/src/proto11111/ncore.proto
 )
 
+zephyr_include_directories(${ZEPHYR_ZMK_STUDIO_MESSAGES_MODULE_DIR}/proto/zmk)
+
 zephyr_library_sources(
     ${proto_bridge_srcs} ${proto_bridge_hdrs}
     src/bridge_uart.c
