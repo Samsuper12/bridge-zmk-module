@@ -11,7 +11,7 @@ zephyr_nanopb_sources(${ZEPHYR_CURRENT_LIBRARY}
     proto/core.proto
 )
 
-zephyr_include_directories(${ZEPHYR_BASE}/lib/nanopb)
+zephyr_include_directories(${ZEPHYR_NANOPB_MODULE_DIR})
 
 
 zephyr_library_sources(
