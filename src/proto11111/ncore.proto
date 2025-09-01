@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package bridge.core;
+package bridge.ncore;
 
 message Request {
     uint32 request_id = 1;
