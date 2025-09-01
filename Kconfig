@@ -2,8 +2,9 @@
 
 menuconfig ZMK_BRIDGE
     bool "Enable ZMK Bridge module support for a board"
-    select NANOPB
     select SERIAL
+    select UART_NATIVE_POSIX_PORT_1_ENABLE
+    select NANOPB
     select CBPRINTF_LIBC_SUBSTS if ARCH_POSIX
     imply NANOPB_NO_ERRMSG
     imply NANOPB_WITHOUT_64BIT
