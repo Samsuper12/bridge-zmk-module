@@ -9,7 +9,7 @@
 #include <zephyr/kernel.h>
 // #include <zephyr/logging/log.h>
 
-enum uart_raming_state {
+enum uart_framing_state {
     FRAMING_STATE_IDLE,
     FRAMING_STATE_AWAITING_DATA,
     FRAMING_STATE_ESCAPED,
@@ -21,7 +21,7 @@ enum uart_raming_state {
 #define FRAMING_ESC 0xAC
 #define FRAMING_EOF 0xAD
 
-static inline bool _process_byte_err_state(enum uart_raming_state *uart_fs, uint8_t c) {
+static inline bool _process_byte_err_state(enum uart_framing_state *uart_fs, uint8_t c) {
     switch (c) {
     case FRAMING_EOF:
         *uart_fs = FRAMING_STATE_IDLE;
@@ -37,7 +37,7 @@ static inline bool _process_byte_err_state(enum uart_raming_state *uart_fs, uint
     return false;
 }
 
-static inline bool _process_byte_idle_state(enum uart_raming_state *uart_fs, uint8_t c) {
+static inline bool _process_byte_idle_state(enum uart_framing_state *uart_fs, uint8_t c) {
     switch (c) {
     case FRAMING_SOF:
         *uart_fs = FRAMING_STATE_AWAITING_DATA;
@@ -49,7 +49,7 @@ static inline bool _process_byte_idle_state(enum uart_raming_state *uart_fs, uin
     return false;
 }
 
-static inline bool _process_byte_awaiting_data_state(enum uart_raming_state *uart_fs, uint8_t c) {
+static inline bool _process_byte_awaiting_data_state(enum uart_framing_state *uart_fs, uint8_t c) {
     switch (c) {
     case FRAMING_SOF:
         // LOG_WRN("Unescaped SOF mid-data");
@@ -68,7 +68,7 @@ static inline bool _process_byte_awaiting_data_state(enum uart_raming_state *uar
     return false;
 }
 
-static inline bool _process_byte_escaped_state(enum uart_raming_state *uart_fs, uint8_t c) {
+static inline bool _process_byte_escaped_state(enum uart_framing_state *uart_fs, uint8_t c) {
     *uart_fs = FRAMING_STATE_AWAITING_DATA;
     return true;
 }
@@ -81,7 +81,7 @@ static inline bool _process_byte_escaped_state(enum uart_raming_state *uart_fs, 
  * @retval false if data is a framing byte, and should be ignored. Also indicates the framing state
  * has been updated.
  */
-static inline bool uart_framing_process_byte(enum uart_raming_state *uart_fs, uint8_t c) {
+static inline bool uart_framing_process_byte(enum uart_framing_state *uart_fs, uint8_t c) {
     switch (*uart_fs) {
     case FRAMING_STATE_ERR:
         return _process_byte_err_state(uart_fs, c);
