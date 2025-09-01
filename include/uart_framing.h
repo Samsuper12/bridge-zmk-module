@@ -7,7 +7,7 @@
 #pragma once
 
 #include <zephyr/kernel.h>
-#include <zephyr/logging/log.h>
+// #include <zephyr/logging/log.h>
 
 enum uart_raming_state {
     FRAMING_STATE_IDLE,
@@ -30,7 +30,7 @@ static inline bool _process_byte_err_state(enum uart_raming_state *uart_fs, uint
         *uart_fs = FRAMING_STATE_AWAITING_DATA;
         return false;
     default:
-        LOG_WRN("Discarding unexpected data 0x%02x", c);
+        // LOG_WRN("Discarding unexpected data 0x%02x", c);
         return false;
     }
 
@@ -43,7 +43,7 @@ static inline bool _process_byte_idle_state(enum uart_raming_state *uart_fs, uin
         *uart_fs = FRAMING_STATE_AWAITING_DATA;
         return false;
     default:
-        LOG_WRN("Expected SOF, got 0x%02x", c);
+        // LOG_WRN("Expected SOF, got 0x%02x", c);
         return false;
     }
     return false;
@@ -52,7 +52,7 @@ static inline bool _process_byte_idle_state(enum uart_raming_state *uart_fs, uin
 static inline bool _process_byte_awaiting_data_state(enum uart_raming_state *uart_fs, uint8_t c) {
     switch (c) {
     case FRAMING_SOF:
-        LOG_WRN("Unescaped SOF mid-data");
+        // LOG_WRN("Unescaped SOF mid-data");
         *uart_fs = FRAMING_STATE_ERR;
         return false;
     case FRAMING_ESC:
@@ -93,7 +93,7 @@ static inline bool uart_framing_process_byte(enum uart_raming_state *uart_fs, ui
     case FRAMING_STATE_ESCAPED:
         return _process_byte_escaped_state(uart_fs, c);
     default:
-        LOG_ERR("Unsupported framing state: %d", *uart_fs);
+        // LOG_ERR("Unsupported framing state: %d", *uart_fs);
         return false;
     }
 }
