@@ -1,6 +1,6 @@
 zephyr_include_directories(include)
 zephyr_include_directories(${ZEPHYR_BASE}/modules/nanopb)
-zephyr_include_directories(${ZEPHYR_CURRENT_MODULE_DIR}/../lib/nanopb)
+zephyr_include_directories(${ZEPHYR_CURRENT_MODULE_DIR}/../nanopb)
 zephyr_library()
 
 list(APPEND CMAKE_MODULE_PATH ${ZEPHYR_BASE}/modules/nanopb)
