@@ -15,7 +15,7 @@
 
 #include <pb_decode.h>
 #include <pb_encode.h>
-#include <proto/bridge/core.pb.h>
+#include <proto/core.pb.h>
 
 #include <uart_framing.h>
 
