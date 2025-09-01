@@ -7,14 +7,15 @@ include(nanopb)
 set(NANOPB_GENERATE_CPP_STANDALONE OFF)
 
 
-zephyr_nanopb_sources(${ZEPHYR_CURRENT_LIBRARY} 
+nanopb_generate_cpp(proto_srcs proto_hdrs RELPATH proto
     proto/core.proto
 )
 
 zephyr_include_directories(${ZEPHYR_NANOPB_MODULE_DIR})
 
-
 zephyr_library_sources(
+    ${proto_srcs} 
+    ${proto_hdrs}
     src/bridge_uart.c
     src/events/bridge_event.c
 )
