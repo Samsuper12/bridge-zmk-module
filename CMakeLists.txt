@@ -8,7 +8,7 @@ set(NANOPB_GENERATE_CPP_STANDALONE OFF)
 
 
 zephyr_nanopb_sources(${ZEPHYR_CURRENT_LIBRARY} 
-    ${ZEPHYR_CURRENT_MODULE_DIR}/src/proto/core.proto
+    ${ZEPHYR_CURRENT_MODULE_DIR}/src/proto11111/core.proto
 )
 
 zephyr_include_directories(${ZEPHYR_NANOPB_MODULE_DIR})
