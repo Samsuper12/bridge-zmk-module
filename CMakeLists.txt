@@ -1,3 +1,4 @@
+zephyr_include_directories(include)
 zephyr_library()
 
 list(APPEND CMAKE_MODULE_PATH ${ZEPHYR_BASE}/modules/nanopb)
@@ -8,7 +9,6 @@ zephyr_nanopb_sources(${ZEPHYR_CURRENT_LIBRARY}
    ${ZEPHYR_CURRENT_MODULE_DIR}/proto/core.proto
 )
 
-zephyr_include_directories(${ZEPHYR_CURRENT_MODULE_DIR}/include)
 zephyr_include_directories(${ZEPHYR_NANOPB_MODULE_DIR})
 
 zephyr_library_sources(
