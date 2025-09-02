@@ -1,10 +1,10 @@
 manifest:
   remotes:
-    - name: zmkfirmware
-      url-base: https://github.com/zmkfirmware
+    - name: nanopb
+      url-base: https://github.com/nanopb
   projects:
     - name: nanopb
-      revision: 8c60555d6277a0360c876bd85d491fc4fb0cd74a
+      revision: master
       path: modules_bridge/lib/nanopb
       
       import: west.yml
