@@ -5,6 +5,6 @@ manifest:
   projects:
     - name: nanopb
       revision: 8c60555d6277a0360c876bd85d491fc4fb0cd74a
-      path: modules/lib/nanopb
+      path: modules_bridge/lib/nanopb
       
       import: west.yml
