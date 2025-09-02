@@ -2,6 +2,8 @@ manifest:
   remotes:
     - name: nanopb
       url-base: https://github.com/nanopb
+  project-imports:
+    allow-override: true
   projects:
     - name: nanopb
       revision: master
