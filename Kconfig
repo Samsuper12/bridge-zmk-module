@@ -1,3 +1,5 @@
+#FIXME for now it will be nice to have only Bridge or Studio. Fix later.
+
 menuconfig ZMK_BRIDGE
     bool "Enable ZMK Bridge module support for a board"
     select SERIAL
@@ -7,6 +9,7 @@ menuconfig ZMK_BRIDGE
     imply NANOPB_NO_ENCODE_SIZE_CHECK
     select RING_BUFFER
     select SETTINGS
+    select ZMK_STUDIO if n
 
 if ZMK_BRIDGE 
 
