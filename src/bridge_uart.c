@@ -203,6 +203,8 @@ static bridge_core_Response handle_request(const bridge_core_Request *req) {
 }
 
 static void bridge_main(void) {
+    LOG_INF("Thread start.");
+
     for (;;) {
         pb_istream_t stream = pb_istream_for_rx_ring_buf();
         bridge_core_Request req = bridge_core_Request_init_zero;
@@ -337,6 +339,8 @@ static int uart_bridge_interface_init(void) {
         LOG_ERR("UART device not found!");
         return -ENODEV;
     }
+
+    LOG_INF("UART start.");
 
 #if IS_ENABLED(CONFIG_UART_INTERRUPT_DRIVEN)
     /* configure interrupt and callback to receive data */
