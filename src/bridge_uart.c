@@ -149,6 +149,7 @@ static pb_ostream_t pb_ostream_for_tx_buf(void *user_data) {
 
 static int send_response(const bridge_core_Response *resp) {
     k_mutex_lock(&bridge_transport_mutex, K_FOREVER);
+    LOG_INF("Sensing response.");
 
     // if (!selected_transport) {
     //   goto exit;
@@ -187,6 +188,8 @@ exit:
 
 // FIXME:
 static bridge_core_Response handle_request(const bridge_core_Request *req) {
+    LOG_INF("New request.");
+
     // zmk_studio_core_reschedule_lock_timeout();
     // struct zmk_rpc_subsystem *sub = find_subsystem_for_choice(req->which_subsystem);
     // if (!sub) {
