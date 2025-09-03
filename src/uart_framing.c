@@ -7,7 +7,7 @@
 #include <uart_framing.h>
 #include <zephyr/logging/log.h>
 
-LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
+LOG_MODULE_DECLARE(zmk_bridge, CONFIG_ZMK_BRIDGE_LOG_LEVEL);
 
 static bool _process_byte_err_state(enum uart_framing_state *uart_fs, uint8_t c) {
     switch (c) {

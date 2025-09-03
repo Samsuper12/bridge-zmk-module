@@ -13,6 +13,10 @@ menuconfig ZMK_BRIDGE
 
 if ZMK_BRIDGE 
 
+module = ZMK_BRIDGE
+module-str = zmk_bridge
+source "subsys/logging/Kconfig.template.log_config"
+
 config ZMK_BRIDGE_RX_BUF_SIZE
     int
     default 32

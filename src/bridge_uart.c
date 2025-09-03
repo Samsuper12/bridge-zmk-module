@@ -19,7 +19,7 @@
 
 #include <uart_framing.h>
 
-LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
+LOG_MODULE_REGISTER(zmk_bridge, CONFIG_ZMK_BRIDGE_LOG_LEVEL);
 
 #include <zmk/bridge.h>
 #include <zmk/events/bridge_event.h>
