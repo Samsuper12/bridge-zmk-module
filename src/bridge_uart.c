@@ -33,6 +33,16 @@ static K_MUTEX_DEFINE(bridge_transport_mutex);
 
 static enum uart_framing_state bridge_framing_state;
 
+static struct bridge_subsystem_handler *find_subsystem_handler_for_choice(uint8_t choice) {
+    STRUCT_SECTION_FOREACH(bridge_subsystem_handler, sub) {
+        if (sub->subsystem_choice == choice) {
+            return sub;
+        }
+    }
+
+    return NULL;
+}
+
 static void tx_notify(struct ring_buf *tx_ring_buf, size_t written, bool msg_done,
                       void *user_data) {
     if (msg_done || (ring_buf_size_get(tx_ring_buf) > (ring_buf_capacity_get(tx_ring_buf) / 2))) {

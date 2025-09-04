@@ -44,13 +44,3 @@ struct bridge_subsystem_handler {
                     },                                                                             \
             },                                                                                     \
     })
-
-static inline struct bridge_subsystem_handler *find_subsystem_handler_for_choice(uint8_t choice) {
-    STRUCT_SECTION_FOREACH(bridge_subsystem_handler, sub) {
-        if (sub->subsystem_choice == choice) {
-            return sub;
-        }
-    }
-
-    return NULL;
-}
