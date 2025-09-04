@@ -192,7 +192,7 @@ static bridge_Response handle_request(const bridge_Request *req) {
                     // zmk_meta_ErrorConditions_RPC_NOT_FOUND);
     }
 
-    bridge_Response resp = sub->func(sub, req);
+    bridge_Response resp = sub->func(req);
     // resp.type.request_response.request_id = req->request_id;
     return resp;
 }
