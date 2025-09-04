@@ -26,7 +26,7 @@ static bool encode_device_info_name(pb_ostream_t *stream, const pb_field_t *fiel
 static bool encode_device_info_serial_number(pb_ostream_t *stream, const pb_field_t *field,
                                              void *const *arg) {
     uint8_t id_buffer[32];
-    const ssize_t id_size = hwinfo_get_device_id(id_buffer, ARRAY_SIZE(id_buffer));
+    const size_t id_size = hwinfo_get_device_id(id_buffer, ARRAY_SIZE(id_buffer));
 
     if (id_size <= 0) {
         return true;
