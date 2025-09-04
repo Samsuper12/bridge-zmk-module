@@ -15,6 +15,7 @@ zephyr_include_directories(${ZEPHYR_NANOPB_MODULE_DIR})
 
 zephyr_library_sources(
     src/bridge_uart.c
+    src/subsystems/core.c
     src/events/bridge_event.c
-    src/uart_framing.c
+    src/util/uart_framing.c
 )
