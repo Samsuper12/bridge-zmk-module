@@ -194,6 +194,8 @@ static bridge_core_Response handle_request(const bridge_core_Request *req) {
     // zmk_studio_Response resp = sub->func(sub, req);
     // resp.type.request_response.request_id = req->request_id;
 
+    LOG_INF("id: %d", req->request_id);
+
     bridge_core_Response resp = bridge_core_Response_init_zero;
 
     return resp;
