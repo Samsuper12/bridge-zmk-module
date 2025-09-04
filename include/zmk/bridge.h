@@ -16,16 +16,6 @@ struct bridge_subsystem_handler {
     uint8_t request_choice;
 };
 
-static inline struct bridge_subsystem_handler *find_subsystem_handler_for_choice(uint8_t choice) {
-    STRUCT_SECTION_FOREACH(bridge_subsystem_handler, sub) {
-        if (sub->subsystem_choice == choice) {
-            return sub;
-        }
-    }
-
-    return NULL;
-}
-
 /**
  * @brief Register an RPC subsystem handler handler a specific request within the subsystem.
  * @param prefix The identifier for the subsystem, e.g. `core`, `keymap`, etc.
@@ -54,3 +44,13 @@ static inline struct bridge_subsystem_handler *find_subsystem_handler_for_choice
                     },                                                                             \
             },                                                                                     \
     })
+
+static inline struct bridge_subsystem_handler *find_subsystem_handler_for_choice(uint8_t choice) {
+    STRUCT_SECTION_FOREACH(bridge_subsystem_handler, sub) {
+        if (sub->subsystem_choice == choice) {
+            return sub;
+        }
+    }
+
+    return NULL;
+}
