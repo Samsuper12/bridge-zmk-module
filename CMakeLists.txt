@@ -14,7 +14,7 @@ zephyr_nanopb_sources(${ZEPHYR_CURRENT_LIBRARY}
 zephyr_include_directories(${ZEPHYR_NANOPB_MODULE_DIR})
 
 
-zephyr_linker_sources(SECTIONS ${PROJECT_SOURCE_DIR}/modules/bridge-zmk-module/include/linker/bridge_subsystem_handlers.ld)
+zephyr_linker_sources(SECTIONS include/linker/bridge_subsystem_handlers.ld)
 
 zephyr_library_sources(
     src/bridge_uart.c
