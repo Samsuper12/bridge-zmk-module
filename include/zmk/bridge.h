@@ -34,7 +34,7 @@ struct bridge_subsystem_handler {
 
 #define BRIDGE_RESPONSE(subsys, _type, ...)                                                        \
     ((bridge_Response){                                                                            \
-        .which_subsystem = bridge_##subsys##_Response_tag,                                         \
+        .which_subsystem = bridge_Response_##subsys##_tag,                                         \
         .subsystem =                                                                               \
             {                                                                                      \
                 .subsys =                                                                          \

@@ -7,6 +7,7 @@
 #include <zmk/bridge.h>
 #include <pb_encode.h>
 #include <zephyr/logging/log.h>
+#include <zephyr/drivers/hwinfo.h>
 
 // TODO: rename to just bridge
 LOG_MODULE_DECLARE(zmk_bridge, CONFIG_ZMK_LOG_LEVEL);
