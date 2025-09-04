@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-#include <bridge.h>
+#include <zmk/bridge.h>
 #include <pb_encode.h>
 #include <zephyr/logging/log.h>
 
