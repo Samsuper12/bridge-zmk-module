@@ -3,17 +3,22 @@ syntax = "proto3";
 package bridge.core;
 
 message Request {
-    uint32 request_id = 1;
-
     oneof request_type {
-        bool get_device_info = 2;
-        bool reset_settings = 3;
+        bool get_device_info = 1;
+        bool reset_settings = 2;
     }
 }
 
 message Response {
     oneof response_type {
-        string data1 = 1;
-        string data2 = 2;
+        GetDeviceInfoResponse get_device_info = 1;
+        bool reset_settings = 2;
     }
+}
+
+message GetDeviceInfoResponse {
+    string name = 1;
+    bytes serial_number = 2;
+    string bridge_version = 3;
+    string zmk_version = 4;
 }

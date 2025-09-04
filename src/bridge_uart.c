@@ -13,7 +13,6 @@
 
 #include <pb_decode.h>
 #include <pb_encode.h>
-#include <proto/core.pb.h>
 
 #include <uart_framing.h>
 
@@ -141,7 +140,7 @@ static pb_ostream_t pb_ostream_for_tx_buf(void *user_data) {
     return stream;
 }
 
-static int send_response(const bridge_core_Response *resp) {
+static int send_response(const bridge_Response *resp) {
     k_mutex_lock(&bridge_transport_mutex, K_FOREVER);
     LOG_INF("Sensing response.");
 
@@ -161,7 +160,7 @@ static int send_response(const bridge_core_Response *resp) {
     tx_notify(&bridge_tx_buf, 1, false, user_data);
 
     /* Now we are ready to encode the message! */
-    bool status = pb_encode(&stream, &bridge_core_Response_msg, resp);
+    bool status = pb_encode(&stream, &bridge_Response_msg, resp);
 
     if (!status) {
 #if !IS_ENABLED(CONFIG_NANOPB_NO_ERRMSG)
@@ -181,23 +180,19 @@ exit:
 }
 
 // FIXME:
-static bridge_core_Response handle_request(const bridge_core_Request *req) {
+static bridge_Response handle_request(const bridge_Request *req) {
     LOG_INF("New request.");
 
-    // zmk_studio_core_reschedule_lock_timeout();
-    // struct zmk_rpc_subsystem *sub = find_subsystem_for_choice(req->which_subsystem);
-    // if (!sub) {
-    // LOG_WRN("No subsystem found for choice %d", req->which_subsystem);
-    //  return ZMK_RPC_RESPONSE(meta, simple_error, zmk_meta_ErrorConditions_RPC_NOT_FOUND);
-    // }
+    struct bridge_subsystem_handler *sub = find_subsystem_handler_for_choice(req->which_subsystem);
+    if (!sub) {
+        LOG_WRN("No subsystem found for choice %d", req->which_subsystem);
+        // TODO:
+        return bridge_Response_init_zero; // ZMK_RPC_RESPONSE(meta, simple_error,
+                                          // zmk_meta_ErrorConditions_RPC_NOT_FOUND);
+    }
 
-    // zmk_studio_Response resp = sub->func(sub, req);
+    bridge_Response resp = sub->func(sub, req);
     // resp.type.request_response.request_id = req->request_id;
-
-    LOG_INF("id: %d", req->request_id);
-
-    bridge_core_Response resp = bridge_core_Response_init_zero;
-
     return resp;
 }
 
@@ -206,16 +201,16 @@ static void bridge_main(void) {
 
     for (;;) {
         pb_istream_t stream = pb_istream_for_rx_ring_buf();
-        bridge_core_Request req = bridge_core_Request_init_zero;
+        bridge_Request req = bridge_Request_init_zero;
 #if IS_ENABLED(CONFIG_THREAD_ANALYZER)
         thread_analyzer_print();
 #endif // IS_ENABLED(CONFIG_THREAD_ANALYZER)
-        bool status = pb_decode(&stream, &bridge_core_Request_msg, &req);
+        bool status = pb_decode(&stream, &bridge_Request_msg, &req);
 
         bridge_framing_state = FRAMING_STATE_IDLE;
 
         if (status) {
-            bridge_core_Response resp = handle_request(&req);
+            bridge_Response resp = handle_request(&req);
 
             int err = send_response(&resp);
 #if IS_ENABLED(CONFIG_THREAD_ANALYZER)

@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package bridge;
+
+import "core.proto";
+
+message Request {
+    uint32 request_id = 1;
+
+    oneof subsystem {
+        bridge.core.Request core = 2;
+    }
+}
+
+message Response {
+    uint32 request_id = 1;
+    bool is_ok = 2;
+    
+    oneof subsystem {
+        bridge.core.Response core = 3;
+    }
+}
