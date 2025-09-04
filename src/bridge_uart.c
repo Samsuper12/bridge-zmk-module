@@ -187,8 +187,9 @@ static bridge_Response handle_request(const bridge_Request *req) {
     if (!sub) {
         LOG_WRN("No subsystem found for choice %d", req->which_subsystem);
         // TODO:
-        return bridge_Response_init_zero; // ZMK_RPC_RESPONSE(meta, simple_error,
-                                          // zmk_meta_ErrorConditions_RPC_NOT_FOUND);
+        bridge_Response ret = bridge_Response_init_zero;
+        return ret; // ZMK_RPC_RESPONSE(meta, simple_error,
+                    // zmk_meta_ErrorConditions_RPC_NOT_FOUND);
     }
 
     bridge_Response resp = sub->func(sub, req);
