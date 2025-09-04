@@ -9,7 +9,6 @@ menuconfig ZMK_BRIDGE
     imply NANOPB_NO_ENCODE_SIZE_CHECK
     select RING_BUFFER
     select SETTINGS
-    select ZMK_STUDIO if n
 
 if ZMK_BRIDGE 
 
@@ -27,7 +26,6 @@ config ZMK_BRIDGE_TX_BUF_SIZE
 
 config ZMK_BRIDGE_TRANSPORT_UART_RX_STACK_SIZE
     int "RX Stack Size"
-    depends on !UART_INTERRUPT_DRIVEN
     default 512
 
 config ZMK_BRIDGE_THREAD_STACK_SIZE
