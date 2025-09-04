@@ -7,6 +7,8 @@
 #pragma once
 
 #include <proto/bridge.pb.h>
+#include <zephyr/sys/iterable_sections.h>
+#include <zephyr/sys/ring_buffer.h>
 
 typedef bridge_Response(bridge_func)(const bridge_Request *req);
 
