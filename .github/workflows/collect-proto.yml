@@ -1,4 +1,4 @@
-name: Collect bridge proto files
+name: Collect bridge proto files from modules
 
 on:
   workflow_call:
@@ -6,7 +6,7 @@ on:
     secrets: {}
 
 jobs:
-  collect-bridge-proto:
+  collect-proto:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -19,9 +19,9 @@ jobs:
         with:
           python-version: '3.x'
       
-      - name: Install West
+      - name: Install Python libs
         run: |
-          pip install west
+          pip install west protobuf
       
       - name: Initialize West workspace
         run: |
@@ -42,10 +42,17 @@ jobs:
                   done
               fi
           done
+
+      - name: Compile proto files
+        run: |
+          mkdir -p compiled-protos
+          echo "Compiling proto files from modules..."
+
+          protoc -I=collected-protos --python_out=compiled-protos collected-protos/*.proto
       
       - name: Upload proto files artifact
         uses: actions/upload-artifact@v4
         with:
-          name: proto-files
-          path: collected-protos
+          name: bridge-proto
+          path: compiled-protos
           retention-days: 30
