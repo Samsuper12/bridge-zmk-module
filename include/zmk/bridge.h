@@ -4,6 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+// TODO: move this out of zmk folder
 #pragma once
 
 #include <proto/bridge.pb.h>
@@ -46,3 +47,12 @@ struct bridge_subsystem_handler {
                     },                                                                             \
             },                                                                                     \
     })
+
+#define BRIDGE_RESPONSE_SIMPLE(request_id, status)                                                 \
+    ((bridge_Response){                                                                            \
+        .request_id = request_id,                                                                  \
+        .request_status = status,                                                                  \
+    })
+
+#define BRIDGE_RESPONSE_OK(request_id) BRIDGE_RESPONSE_SIMPLE(request_id, true)
+#define BRIDGE_RESPONSE_FAIL(request_id) BRIDGE_RESPONSE_SIMPLE(request_id, false)
