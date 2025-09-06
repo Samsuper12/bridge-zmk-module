@@ -19,9 +19,10 @@ jobs:
         with:
           python-version: '3.x'
       
-      - name: Install Python libs
+      - name: Install libs
         run: |
           pip install west protobuf
+          apt install -y protobuf-compiler
       
       - name: Initialize West workspace
         run: |
