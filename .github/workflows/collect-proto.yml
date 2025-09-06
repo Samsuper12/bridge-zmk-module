@@ -22,7 +22,7 @@ jobs:
       - name: Install libs
         run: |
           pip install west protobuf
-          apt install -y protobuf-compiler
+          sudo apt install -y protobuf-compiler
       
       - name: Initialize West workspace
         run: |
