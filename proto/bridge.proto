@@ -20,3 +20,9 @@ message Response {
         bridge.core.Response core = 3;
     }
 }
+
+message Notification {
+    oneof subsystem {
+        bridge.core.Notification core = 1;
+    }
+}

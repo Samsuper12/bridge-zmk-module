@@ -16,6 +16,10 @@ message Response {
     }
 }
 
+message Notification {
+    bool dummy = 1;
+}
+
 message GetDeviceInfoResponse {
     string name = 1;
     bytes serial_number = 2;
