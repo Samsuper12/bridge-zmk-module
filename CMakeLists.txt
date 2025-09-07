@@ -1,6 +1,5 @@
 zephyr_include_directories(include)
 zephyr_include_directories(proto)
-zephyr_include_directories(${CMAKE_CURRENT_BINARY_DIR}/proto)
 zephyr_include_directories(${APPLICATION_SOURCE_DIR}/include)
 zephyr_library()
 
@@ -31,6 +30,8 @@ zephyr_nanopb_sources(${ZEPHYR_CURRENT_LIBRARY}
 )
 
 zephyr_include_directories(${ZEPHYR_NANOPB_MODULE_DIR})
+zephyr_include_directories(${CMAKE_CURRENT_BINARY_DIR}/proto)
+
 
 
 zephyr_linker_sources(SECTIONS include/linker/bridge_subsystem_handlers.ld)
