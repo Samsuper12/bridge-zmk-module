@@ -13,6 +13,8 @@ set(bridge_main_proto "${ZEPHYR_CURRENT_MODULE_DIR}/proto/bridge.proto")
 file(GLOB_RECURSE module_proto_files
     "../*/proto/*.proto")
 
+
+
 foreach(module_proto ${module_proto_files})
     message(STATUS "BRIDGE: Found module proto: ${module_proto}")
     execute_process(
@@ -25,7 +27,12 @@ foreach(module_proto ${module_proto_files})
         message(FATAL_ERROR "BRIDGE: Failed to execute append_proto.py for ${module_proto}. Error: ${script_error}")
     endif()
     
-    list(APPEND processed_proto_files ${module_proto})
+    get_filename_component(proto_name ${module_proto} NAME)
+
+    if (NOT "${proto_name}" STREQUAL "bridge.proto")
+        configure_file(${module_proto} ${ZEPHYR_CURRENT_MODULE_DIR}/proto/${proto_name} COPYONLY)
+        list(APPEND processed_proto_files ${ZEPHYR_CURRENT_MODULE_DIR}/proto/${proto_name})
+    endif()
 endforeach()
 
 list(APPEND CMAKE_MODULE_PATH ${ZEPHYR_BASE}/modules/nanopb)
