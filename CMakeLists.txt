@@ -15,7 +15,16 @@ file(GLOB_RECURSE module_proto_files
 
 foreach(module_proto ${module_proto_files})
     message(STATUS "BRIDGE: Found module proto: ${module_proto}")
-    execute_process(COMMAND python ${ZEPHYR_CURRENT_MODULE_DIR}/scripts/append_proto.py ${bridge_main_proto} ${module_proto})
+    execute_process(
+        COMMAND ${CMAKE_COMMAND} -E env python3 ${ZEPHYR_CURRENT_MODULE_DIR}/scripts/append_proto.py ${bridge_main_proto} ${module_proto}
+        RESULT_VARIABLE script_result
+        ERROR_VARIABLE script_error
+    )
+
+    if(NOT script_result EQUAL 0)
+        message(FATAL_ERROR "BRIDGE: Failed to execute append_proto.py for ${module_proto}. Error: ${script_error}")
+    endif()
+    
     list(APPEND processed_proto_files ${module_proto})
 endforeach()
 
