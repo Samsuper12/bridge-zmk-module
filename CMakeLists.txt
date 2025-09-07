@@ -6,7 +6,7 @@ zephyr_library()
 message(STATUS "BRIDGE: Seaching for Modules")
 
 file(GLOB_RECURSE module_proto_files
-    "${APPLICATION_SOURCE_DIR}/*/proto/*.proto")
+    "../*/proto/*.proto")
 message(STATUS "BRIDGE: modules ${module_proto_files}")
 
 
