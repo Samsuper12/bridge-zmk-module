@@ -7,7 +7,7 @@ message(STATUS "BRIDGE: Seaching for Modules")
 
 file(GLOB_RECURSE module_proto_files
     "${APPLICATION_SOURCE_DIR}/*/proto/*.proto")
-message(STATUS "BRIDGE: modules ${ZEPHYR_MODULES}")
+message(STATUS "BRIDGE: modules ${module_proto_files}")
 
 
 set(processed_proto_files "")
