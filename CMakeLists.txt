@@ -1,4 +1,5 @@
 zephyr_include_directories(include)
+zephyr_include_directories(proto)
 zephyr_include_directories(${APPLICATION_SOURCE_DIR}/include)
 zephyr_library()
 
