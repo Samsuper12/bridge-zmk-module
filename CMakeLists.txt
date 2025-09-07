@@ -40,7 +40,8 @@ include(nanopb)
 set(NANOPB_GENERATE_CPP_STANDALONE OFF)
 
 zephyr_nanopb_sources(${ZEPHYR_CURRENT_LIBRARY}
-   ${processed_proto_files}
+    ${ZEPHYR_CURRENT_MODULE_DIR}/proto/bridge.proto
+    ${processed_proto_files}
 )
 
 zephyr_include_directories(${ZEPHYR_NANOPB_MODULE_DIR})
