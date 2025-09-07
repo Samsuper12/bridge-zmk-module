@@ -7,7 +7,7 @@
 // TODO: move this out of zmk folder
 #pragma once
 
-#include <proto/bridge.pb.h>
+#include <bridge.pb.h>
 #include <zephyr/sys/iterable_sections.h>
 #include <zephyr/sys/ring_buffer.h>
 
