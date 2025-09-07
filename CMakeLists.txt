@@ -12,6 +12,8 @@ foreach (module_path ${ZEPHYR_MODULES})
     file(GLOB_RECURSE module_proto_files
     "${module_path}/proto/*.proto")
 
+    message(STATUS "BRIDGE: Found module protos: ${module_proto_files}")
+
     foreach(module_proto ${module_proto_files})
         message(STATUS "BRIDGE: Found module proto: ${module_proto}")
         execute_process(COMMAND python ${ZEPHYR_CURRENT_MODULE_DIR}/scripts/append_proto.py ${bridge_main_proto} ${module_proto})
