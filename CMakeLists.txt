@@ -5,32 +5,25 @@ zephyr_library()
 
 message(STATUS "BRIDGE: Seaching for Modules")
 
-file(GLOB_RECURSE module_proto_files
-    "../*/proto/*.proto")
-message(STATUS "BRIDGE: modules ${module_proto_files}")
 
 
 set(processed_proto_files "")
 set(bridge_main_proto "${ZEPHYR_CURRENT_MODULE_DIR}/proto/bridge.proto")
 
-foreach (module_path ${ZEPHYR_MODULES})
-    file(GLOB_RECURSE module_proto_files
-    "${module_path}/proto/*.proto")
+file(GLOB_RECURSE module_proto_files
+    "../*/proto/*.proto")
 
-    foreach(module_proto ${module_proto_files})
-        message(STATUS "BRIDGE: Found module proto: ${module_proto}")
-        execute_process(COMMAND python ${ZEPHYR_CURRENT_MODULE_DIR}/scripts/append_proto.py ${bridge_main_proto} ${module_proto})
-        list(APPEND processed_proto_files ${module_proto})
-    endforeach()
+foreach(module_proto ${module_proto_files})
+    message(STATUS "BRIDGE: Found module proto: ${module_proto}")
+    execute_process(COMMAND python ${ZEPHYR_CURRENT_MODULE_DIR}/scripts/append_proto.py ${bridge_main_proto} ${module_proto})
+    list(APPEND processed_proto_files ${module_proto})
 endforeach()
 
 list(APPEND CMAKE_MODULE_PATH ${ZEPHYR_BASE}/modules/nanopb)
 include(nanopb)
 set(NANOPB_GENERATE_CPP_STANDALONE OFF)
 
-zephyr_nanopb_sources(${ZEPHYR_CURRENT_LIBRARY} 
-   ${ZEPHYR_CURRENT_MODULE_DIR}/proto/bridge.proto
-   ${ZEPHYR_CURRENT_MODULE_DIR}/proto/core.proto
+zephyr_nanopb_sources(${ZEPHYR_CURRENT_LIBRARY}
    ${processed_proto_files}
 )
 
