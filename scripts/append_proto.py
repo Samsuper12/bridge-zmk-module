@@ -69,14 +69,17 @@ def main():
     if not os.path.exists(bridge_proto_path):
         print(f"Error: Proto file '{bridge_proto_path}' does not exist")
         sys.exit(1)
-    else:
-        print(f"Bridge main proto file: '{bridge_proto_path}'")
    
     if not os.path.exists(module_proto_path):
         print(f"Error: Config file '{module_proto_path}' does not exist")
         sys.exit(1)
     else:
-        print(f"Bridge module proto file: '{module_proto_path}'")
+        print(f"Merging Brdige module proto file: '{module_proto_path}'")
+
+    if os.path.basename(bridge_proto_path) == os.path.basename(module_proto_path):
+        print("Skip. Trying to merge Bridge proto file with itself")
+        sys.exit(0)
+        
    
     module, name, messages = parse_module_proto(module_proto_path)
     add_import(bridge_proto_path, os.path.basename(module_proto_path))
