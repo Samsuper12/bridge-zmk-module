@@ -1,5 +1,6 @@
 zephyr_include_directories(include)
 zephyr_include_directories(proto)
+zephyr_include_directories(${CMAKE_CURRENT_BINARY_DIR}/modules/bridge-zmk-module/proto)
 zephyr_include_directories(${APPLICATION_SOURCE_DIR}/include)
 zephyr_library()
 
