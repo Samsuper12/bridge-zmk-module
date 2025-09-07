@@ -5,14 +5,15 @@ zephyr_library()
 
 message(STATUS "BRIDGE: Seaching for Modules")
 
+message(STATUS "BRIDGE: modules ${ZEPHYR_MODULES}")
+
+
 set(processed_proto_files "")
 set(bridge_main_proto "${ZEPHYR_CURRENT_MODULE_DIR}/proto/bridge.proto")
 
 foreach (module_path ${ZEPHYR_MODULES})
     file(GLOB_RECURSE module_proto_files
     "${module_path}/proto/*.proto")
-
-    message(STATUS "BRIDGE: Found module protos: ${module_proto_files}")
 
     foreach(module_proto ${module_proto_files})
         message(STATUS "BRIDGE: Found module proto: ${module_proto}")
