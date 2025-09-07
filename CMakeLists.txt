@@ -5,6 +5,8 @@ zephyr_library()
 
 message(STATUS "BRIDGE: Seaching for Modules")
 
+file(GLOB_RECURSE module_proto_files
+    "${APPLICATION_SOURCE_DIR}/*/proto/*.proto")
 message(STATUS "BRIDGE: modules ${ZEPHYR_MODULES}")
 
 
@@ -34,8 +36,6 @@ zephyr_nanopb_sources(${ZEPHYR_CURRENT_LIBRARY}
 
 zephyr_include_directories(${ZEPHYR_NANOPB_MODULE_DIR})
 zephyr_include_directories(${CMAKE_CURRENT_BINARY_DIR}/proto)
-
-
 
 zephyr_linker_sources(SECTIONS include/linker/bridge_subsystem_handlers.ld)
 
