@@ -74,7 +74,7 @@ def main():
         print(f"Error: Config file '{module_proto_path}' does not exist")
         sys.exit(1)
     else:
-        print(f"Merging Brdige module proto file: '{module_proto_path}'")
+        print(f"Merging Bridge module proto file: '{module_proto_path}'")
 
     if os.path.basename(bridge_proto_path) == os.path.basename(module_proto_path):
         print("Skip. Trying to merge Bridge proto file with itself")
