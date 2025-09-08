@@ -1,19 +1,15 @@
 zephyr_include_directories(include)
 zephyr_include_directories(proto)
 zephyr_include_directories(${APPLICATION_SOURCE_DIR}/include)
-zephyr_library()
+zephyr_library_named(bridge-zmk-module)
 
 message(STATUS "BRIDGE: Seaching for Modules")
-
-
 
 set(processed_proto_files "")
 set(bridge_main_proto "${ZEPHYR_CURRENT_MODULE_DIR}/proto/bridge.proto")
 
 file(GLOB_RECURSE module_proto_files
     "../*/proto/*.proto")
-
-
 
 foreach(module_proto ${module_proto_files})
     message(STATUS "BRIDGE: Found module proto: ${module_proto}")
