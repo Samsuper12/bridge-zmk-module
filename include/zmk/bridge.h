@@ -48,11 +48,7 @@ struct bridge_subsystem_handler {
             },                                                                                     \
     })
 
-#define BRIDGE_RESPONSE_SIMPLE(request_id, status)                                                 \
+#define BRIDGE_RESPONSE_SIMPLE(status)                                                             \
     ((bridge_Response){                                                                            \
-        .request_id = request_id,                                                                  \
         .request_status = status,                                                                  \
     })
-
-#define BRIDGE_RESPONSE_OK BRIDGE_RESPONSE_SIMPLE(0, true)
-#define BRIDGE_RESPONSE_FAIL BRIDGE_RESPONSE_SIMPLE(0, false)
