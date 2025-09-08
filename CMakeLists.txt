@@ -32,7 +32,7 @@ foreach(module_proto ${module_proto_files})
 endforeach()
 
 file(READ bridge_main_proto BRIDGE_PROTO_CONTENT)
-message(STATUS "BRIDGE: bridge.proto content: %{BRIDGE_PROTO_CONTENT}")
+message(STATUS "BRIDGE: bridge.proto content: ${BRIDGE_PROTO_CONTENT}")
 
 
 list(APPEND CMAKE_MODULE_PATH ${ZEPHYR_BASE}/modules/nanopb)
