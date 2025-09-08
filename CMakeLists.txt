@@ -6,7 +6,7 @@ zephyr_library_named(bridge-zmk-module)
 if (CONFIG_ZMK_BRIDGE)
     message(STATUS "BRIDGE: Seaching for Modules")
 
-    set(processed_proto_files "")
+    set(copied_proto_files "")
     set(bridge_main_proto "${ZEPHYR_CURRENT_MODULE_DIR}/proto/bridge.proto")
 
     file(GLOB_RECURSE module_proto_files
@@ -27,7 +27,7 @@ if (CONFIG_ZMK_BRIDGE)
 
         if (NOT "${proto_name}" STREQUAL "bridge.proto")
             configure_file(${module_proto} ${ZEPHYR_CURRENT_MODULE_DIR}/proto/${proto_name} COPYONLY)
-            list(APPEND processed_proto_files ${ZEPHYR_CURRENT_MODULE_DIR}/proto/${proto_name})
+            list(APPEND copied_proto_files ${ZEPHYR_CURRENT_MODULE_DIR}/proto/${proto_name})
         endif()
     endforeach()
 
@@ -37,7 +37,7 @@ if (CONFIG_ZMK_BRIDGE)
 
     zephyr_nanopb_sources(${ZEPHYR_CURRENT_LIBRARY}
         ${ZEPHYR_CURRENT_MODULE_DIR}/proto/bridge.proto
-        ${processed_proto_files}
+        ${copied_proto_files}
     )
 
     zephyr_include_directories(${ZEPHYR_NANOPB_MODULE_DIR})
