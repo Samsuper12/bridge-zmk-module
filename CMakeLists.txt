@@ -31,7 +31,7 @@ foreach(module_proto ${module_proto_files})
     endif()
 endforeach()
 
-file(READ bridge_main_proto BRIDGE_PROTO_CONTENT)
+file(READ "${bridge_main_proto}" BRIDGE_PROTO_CONTENT)
 message(STATUS "BRIDGE: bridge.proto content: ${BRIDGE_PROTO_CONTENT}")
 
 
