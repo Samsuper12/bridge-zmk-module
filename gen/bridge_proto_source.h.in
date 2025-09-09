@@ -1,0 +1,7 @@
+/*
+ * Copyright (c) 2025 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+static const char bridge_proto_source[] = "@BRIDGE_PROTO_SOURCE@";

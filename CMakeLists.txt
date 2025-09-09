@@ -31,6 +31,15 @@ if (CONFIG_ZMK_BRIDGE)
         endif()
     endforeach()
 
+    file(READ "${bridge_main_proto}" BRIDGE_PROTO_SOURCE_RAW)
+    string(STRIP "${BRIDGE_PROTO_SOURCE_RAW}" BRIDGE_PROTO_SOURCE) # remove newline etc.
+
+    configure_file(
+        ${ZEPHYR_CURRENT_MODULE_DIR}/gen/bridge_proto_source.h.in
+        ${CMAKE_CURRENT_BINARY_DIR}/bridge_proto_source.h
+        @ONLY
+    )
+
     list(APPEND CMAKE_MODULE_PATH ${ZEPHYR_BASE}/modules/nanopb)
     include(nanopb)
     set(NANOPB_GENERATE_CPP_STANDALONE OFF)

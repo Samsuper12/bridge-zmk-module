@@ -16,6 +16,9 @@
 
 #include <uart_framing.h>
 
+// gen/bridge_proto_source.h.in
+#include "bridge_proto_source.h"
+
 LOG_MODULE_REGISTER(zmk_bridge, CONFIG_ZMK_BRIDGE_LOG_LEVEL);
 
 #include <zmk/bridge.h>
@@ -189,9 +192,26 @@ exit:
     return 0;
 }
 
+static bool encode_get_bridge_source(pb_ostream_t *stream, const pb_field_t *field,
+                                     void *const *arg) {
+    if (!pb_encode_tag_for_field(stream, field)) {
+        return false;
+    }
+
+    return pb_encode_string(stream, bridge_proto_source, strlen(bridge_proto_source));
+}
+
 // FIXME:
 static bridge_Response handle_request(const bridge_Request *req) {
     LOG_INF("New request.");
+
+    if (req->get_bridge_source == true) {
+        bridgeResponse resp = bridgeResponse_init_zero;
+        resp.request_status = true;
+        resp.get_bridge_source.funcs.encode = encode_get_bridge_source;
+
+        return resp;
+    }
 
     struct bridge_subsystem_handler *sub = find_subsystem_handler_for_choice(req->which_subsystem);
     if (!sub) {
