@@ -206,7 +206,7 @@ static bridge_Response handle_request(const bridge_Request *req) {
     LOG_INF("New request.");
 
     if (req->get_bridge_source == true) {
-        bridgeResponse resp = bridgeResponse_init_zero;
+        bridge_Response resp = bridge_Response_init_zero;
         resp.request_status = true;
         resp.get_bridge_source.funcs.encode = encode_get_bridge_source;
 
