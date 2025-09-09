@@ -32,7 +32,12 @@ if (CONFIG_ZMK_BRIDGE)
     endforeach()
 
     file(READ "${bridge_main_proto}" BRIDGE_PROTO_SOURCE_RAW)
-    string(STRIP "${BRIDGE_PROTO_SOURCE_RAW}" BRIDGE_PROTO_SOURCE) # remove newline etc.
+    #string(STRIP "${BRIDGE_PROTO_SOURCE_RAW}" BRIDGE_PROTO_SOURCE)
+
+    string(REPLACE "\\" "\\\\" BRIDGE_PROTO_SOURCE "${BRIDGE_PROTO_SOURCE_RAW}")
+    string(REPLACE "\"" "\\\"" BRIDGE_PROTO_SOURCE "${BRIDGE_PROTO_SOURCE}")
+    string(REPLACE "\n" "\\n" BRIDGE_PROTO_SOURCE "${BRIDGE_PROTO_SOURCE}")
+
 
     configure_file(
         ${ZEPHYR_CURRENT_MODULE_DIR}/gen/bridge_proto_source.h.in
