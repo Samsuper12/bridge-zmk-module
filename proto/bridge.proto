@@ -4,7 +4,7 @@ package bridge;
 
 message Request {
     uint32 request_id = 1;
-    bool get_bridge_source = 2
+    bool get_bridge_source = 2;
 
     oneof subsystem {
         bool placeholder = 3;
