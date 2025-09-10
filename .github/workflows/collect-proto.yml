@@ -43,10 +43,6 @@ jobs:
                   done
               fi
           done
-
-      - name: Remove bridge.proto
-        run: |
-          rm collected-protos/bridge.proto
       
       - name: Upload proto files artifact
         uses: actions/upload-artifact@v4
