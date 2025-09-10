@@ -44,24 +44,13 @@ jobs:
               fi
           done
 
-      - name: Compile proto files
+      - name: Remove bridge.proto
         run: |
-          mkdir -p compiled-protos
-          echo "Compiling proto files from modules..."
-
-          protoc -I=collected-protos --python_out=compiled-protos collected-protos/*.proto
-
-      - name: Remove bridge_pb2.py
-        run: |
-          rm compiled-protos/bridge_pb2.py
-
-      - name: Rename proto files
-        run: |
-          for f in compiled-protos/*_pb2.py; do mv "$f" "${f%_pb2.py}.py"; done
+          rm collected-protos/bridge.proto
       
       - name: Upload proto files artifact
         uses: actions/upload-artifact@v4
         with:
           name: bridge-proto
-          path: compiled-protos
+          path: collected-protos
           retention-days: 30
