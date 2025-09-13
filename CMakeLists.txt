@@ -31,13 +31,21 @@ if (CONFIG_ZMK_BRIDGE)
         endif()
     endforeach()
 
-    file(READ "${bridge_main_proto}" BRIDGE_PROTO_SOURCE_RAW)
-    #string(STRIP "${BRIDGE_PROTO_SOURCE_RAW}" BRIDGE_PROTO_SOURCE)
 
-    string(REPLACE "\\" "\\\\" BRIDGE_PROTO_SOURCE "${BRIDGE_PROTO_SOURCE_RAW}")
-    string(REPLACE "\"" "\\\"" BRIDGE_PROTO_SOURCE "${BRIDGE_PROTO_SOURCE}")
-    string(REPLACE "\n" "\\n" BRIDGE_PROTO_SOURCE "${BRIDGE_PROTO_SOURCE}")
+    list(APPEND copied_proto_files "${bridge_main_proto}")
+    set (BRIDGE_PROTO_SOURCE "")
+    foreach (file ${copied_proto_files})
+        get_filename_component(proto_name ${file} NAME)
+        set(BRIDGE_PROTO_SOURCE "${BRIDGE_PROTO_SOURCE}\\nfile:${proto_name}\\n")
 
+        file(READ "${file}" PROTO_SOURCE_RAW)
+
+        string(REPLACE "\\" "\\\\" PROTO_SOURCE "${PROTO_SOURCE_RAW}")
+        string(REPLACE "\"" "\\\"" PROTO_SOURCE "${PROTO_SOURCE}")
+        string(REPLACE "\n" "\\n" PROTO_SOURCE "${PROTO_SOURCE}")
+
+        set(BRIDGE_PROTO_SOURCE "${BRIDGE_PROTO_SOURCE}${PROTO_SOURCE}")
+    endforeach()
 
     configure_file(
         ${ZEPHYR_CURRENT_MODULE_DIR}/gen/bridge_proto_source.h.in
@@ -50,7 +58,6 @@ if (CONFIG_ZMK_BRIDGE)
     set(NANOPB_GENERATE_CPP_STANDALONE OFF)
 
     zephyr_nanopb_sources(${ZEPHYR_CURRENT_LIBRARY}
-        ${ZEPHYR_CURRENT_MODULE_DIR}/proto/bridge.proto
         ${copied_proto_files}
     )
 
