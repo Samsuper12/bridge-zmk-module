@@ -32,21 +32,7 @@ manifest:
   self:
     path: config
 ```
-
-Then add the `collect-proto` job to your `.github/workflows/build.yml`:
-```yaml
-name: Build ZMK firmware
-on: [push, pull_request, workflow_dispatch]
-
-jobs:
-  build:
-    uses: zmkfirmware/zmk/.github/workflows/build-user-config.yml@main
-  
-  bridge:                                                                       # <--- add these
-    uses: Samsuper12/bridge-zmk-module/.github/workflows/collect-proto.yml@main # 
-
-```
-At last, add the `bridge-uart-usb` snipper to `build.yaml`
+At last, add the `bridge-usb-uart` snippet to `build.yaml`
 ```yaml
 include:
 # Example
