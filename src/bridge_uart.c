@@ -16,8 +16,8 @@
 
 #include <uart_framing.h>
 
-// gen/bridge_proto_source.h.in
-#include "bridge_proto_source.h"
+// gen/bridge_gen.h.in
+#include "bridge_gen.h"
 
 LOG_MODULE_REGISTER(zmk_bridge, CONFIG_ZMK_BRIDGE_LOG_LEVEL);
 

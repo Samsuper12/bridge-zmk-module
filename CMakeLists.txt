@@ -37,7 +37,6 @@ if (CONFIG_ZMK_BRIDGE)
         endif()
     endforeach()
 
-
     list(APPEND copied_proto_files "${bridge_main_proto}")
     foreach (file ${copied_proto_files})
         get_filename_component(proto_name ${file} NAME)
@@ -55,8 +54,8 @@ if (CONFIG_ZMK_BRIDGE)
     endforeach()
 
     configure_file(
-        ${ZEPHYR_CURRENT_MODULE_DIR}/gen/bridge_proto_source.h.in
-        ${CMAKE_CURRENT_BINARY_DIR}/bridge_proto_source.h
+        ${ZEPHYR_CURRENT_MODULE_DIR}/gen/bridge_gen.h.in
+        ${CMAKE_CURRENT_BINARY_DIR}/bridge_gen.h
         @ONLY
     )
 
