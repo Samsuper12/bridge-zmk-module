@@ -155,14 +155,6 @@ static pb_ostream_t pb_ostream_for_tx_buf(void *user_data) {
 
 static int send_response(const bridge_Response *resp) {
     k_mutex_lock(&bridge_transport_mutex, K_FOREVER);
-    LOG_INF("Sensing response.");
-
-    // if (!selected_transport) {
-    //   goto exit;
-    //}
-
-    // void *user_data = selected_transport->tx_user_data ? selected_transport->tx_user_data() :
-    // NULL;
 
     void *user_data = NULL;
     pb_ostream_t stream = pb_ostream_for_tx_buf(user_data);
@@ -186,8 +178,6 @@ static int send_response(const bridge_Response *resp) {
     ring_buf_put(&bridge_tx_buf, &framing_byte, 1);
 
     tx_notify(&bridge_tx_buf, 1, true, user_data);
-
-exit:
     k_mutex_unlock(&bridge_transport_mutex);
     return 0;
 }
@@ -209,7 +199,7 @@ static bool encode_bridge_version(pb_ostream_t *stream, const pb_field_t *field,
     return pb_encode_string(stream, bridge_version, strlen(bridge_version));
 }
 
-static bool encode_molude_names(pb_ostream_t *stream, const pb_field_t *field, void *const *arg) {
+static bool encode_module_names(pb_ostream_t *stream, const pb_field_t *field, void *const *arg) {
     if (!pb_encode_tag_for_field(stream, field)) {
         return false;
     }
@@ -227,11 +217,16 @@ static bridge_Response handle_request(const bridge_Request *req) {
     }
 
     if (req->get_bridge_info) {
+        bridge_GetBridgeInfoResponse bridge_info = bridge_GetBridgeInfoResponse_init_zero;
+        bridge_info.device_id = bridge_device_id;
+        bridge_info.bridge_version.funcs.encode = encode_bridge_version;
+        bridge_info.module_names.funcs.encode = encode_module_names;
+
         bridge_Response resp = bridge_Response_init_zero;
         resp.request_status = true;
-        resp.bridge_info.device_id = bridge_device_id;
-        resp.bridge_info.bridge_version.funcs.encode = encode_bridge_version;
-        resp.bridge_info.molude_names.funcs.encode = encode_molude_names;
+        resp.bridge_info = bridge_info;
+        resp.has_bridge_info = true;
+
         return resp;
     }
 
@@ -246,8 +241,6 @@ static bridge_Response handle_request(const bridge_Request *req) {
 }
 
 static void bridge_main(void) {
-    LOG_INF("Thread start.");
-
     for (;;) {
         pb_istream_t stream = pb_istream_for_rx_ring_buf();
         bridge_Request req = bridge_Request_init_zero;

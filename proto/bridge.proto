@@ -31,5 +31,5 @@ message Notification {
 message GetBridgeInfoResponse {
     uint32 device_id = 1;
     string bridge_version = 2;
-    string molude_names = 3;
+    string module_names = 3;
 }

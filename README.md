@@ -6,7 +6,6 @@ A [ZMK](https://zmk.dev) module that enables dynamic keyboard configuration and 
 
 ## Features
 - Dynamic keyboard configuration at runtime
-- Custom communication protocol for extended flexibility
 - Configurable via [bridge-cli](https://github.com/Samsuper12/zmk-bridge-cli)
 - Easy extensible through additional modules
 ---

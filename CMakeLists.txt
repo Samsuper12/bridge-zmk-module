@@ -49,7 +49,12 @@ if (CONFIG_ZMK_BRIDGE)
         string(REPLACE "\n" "\\n" PROTO_SOURCE "${PROTO_SOURCE}")
         string(REPLACE ".proto" "" module_name "${proto_name}")
         
-        set(BRIDGE_PROTO_MODULE_NAMES "${BRIDGE_PROTO_MODULE_NAMES}, ${module_name}")
+        if (BRIDGE_PROTO_MODULE_NAMES STREQUAL "")
+            set(BRIDGE_PROTO_MODULE_NAMES "${module_name}")
+        else()
+            set(BRIDGE_PROTO_MODULE_NAMES "${BRIDGE_PROTO_MODULE_NAMES}, ${module_name}")
+        endif()
+        
         set(BRIDGE_PROTO_SOURCE "${BRIDGE_PROTO_SOURCE}${PROTO_SOURCE}")
     endforeach()
 
