@@ -5,3 +5,6 @@
  */
 
 static const char bridge_proto_source[] = "@BRIDGE_PROTO_SOURCE@";
+static const char bridge_module_names[] = "@BRIDGE_PROTO_MODULE_NAMES@";
+static const char bridge_version[] = "@BRIDGE_VERSION@";
+static const int bridge_device_id = @CONFIG_ZMK_BRIDGE_DEVICE_ID@;

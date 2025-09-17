@@ -32,4 +32,8 @@ config ZMK_BRIDGE_THREAD_STACK_SIZE
     int "Bridge Thread Stack Size"
     default 4096
 
+config ZMK_BRIDGE_DEVICE_ID
+    int "Device ID"
+    default 1
+
 endif

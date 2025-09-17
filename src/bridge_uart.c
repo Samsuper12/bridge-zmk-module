@@ -201,29 +201,47 @@ static bool encode_get_bridge_source(pb_ostream_t *stream, const pb_field_t *fie
     return pb_encode_string(stream, bridge_proto_source, strlen(bridge_proto_source));
 }
 
-// FIXME:
-static bridge_Response handle_request(const bridge_Request *req) {
-    LOG_INF("New request.");
+static bool encode_bridge_version(pb_ostream_t *stream, const pb_field_t *field, void *const *arg) {
+    if (!pb_encode_tag_for_field(stream, field)) {
+        return false;
+    }
 
-    if (req->get_bridge_source == true) {
+    return pb_encode_string(stream, bridge_version, strlen(bridge_version));
+}
+
+static bool encode_molude_names(pb_ostream_t *stream, const pb_field_t *field, void *const *arg) {
+    if (!pb_encode_tag_for_field(stream, field)) {
+        return false;
+    }
+
+    return pb_encode_string(stream, bridge_module_names, strlen(bridge_module_names));
+}
+
+static bridge_Response handle_request(const bridge_Request *req) {
+
+    if (req->get_bridge_source) {
         bridge_Response resp = bridge_Response_init_zero;
         resp.request_status = true;
-        resp.get_bridge_source.funcs.encode = encode_get_bridge_source;
+        resp.bridge_source.funcs.encode = encode_get_bridge_source;
+        return resp;
+    }
 
+    if (req->get_bridge_info) {
+        bridge_Response resp = bridge_Response_init_zero;
+        resp.request_status = true;
+        resp.bridge_info.device_id = bridge_device_id;
+        resp.bridge_info.bridge_version.funcs.encode = encode_bridge_version;
+        resp.bridge_info.molude_names.funcs.encode = encode_molude_names;
         return resp;
     }
 
     struct bridge_subsystem_handler *sub = find_subsystem_handler_for_choice(req->which_subsystem);
     if (!sub) {
         LOG_WRN("No subsystem found for choice %d", req->which_subsystem);
-        // TODO:
-        bridge_Response ret = bridge_Response_init_zero;
-        return ret; // ZMK_RPC_RESPONSE(meta, simple_error,
-                    // zmk_meta_ErrorConditions_RPC_NOT_FOUND);
+        return BRIDGE_RESPONSE_SIMPLE(false);
     }
 
     bridge_Response resp = sub->func(req);
-    // resp.type.request_response.request_id = req->request_id;
     return resp;
 }
 

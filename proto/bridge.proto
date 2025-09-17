@@ -3,7 +3,7 @@ syntax = "proto3";
 package bridge;
 
 message Request {
-    uint32 request_id = 1;
+    bool get_bridge_info = 1;
     bool get_bridge_source = 2;
 
     oneof subsystem {
@@ -14,10 +14,11 @@ message Request {
 message Response {
     uint32 request_id = 1;
     bool request_status = 2;
-    string get_bridge_source = 3;
+    string bridge_source = 3;
+    GetBridgeInfoResponse bridge_info = 4;
     
     oneof subsystem {
-        bool placeholder = 4;
+        bool placeholder = 5;
     }
 }
 
@@ -25,4 +26,10 @@ message Notification {
     oneof subsystem {
         bool placeholder = 1;
     }
+}
+
+message GetBridgeInfoResponse {
+    uint32 device_id = 1;
+    string bridge_version = 2;
+    string molude_names = 3;
 }

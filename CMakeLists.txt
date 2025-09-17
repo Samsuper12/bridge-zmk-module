@@ -3,7 +3,13 @@ zephyr_include_directories(proto)
 zephyr_include_directories(${APPLICATION_SOURCE_DIR}/include)
 zephyr_library_named(bridge-zmk-module)
 
+
 if (CONFIG_ZMK_BRIDGE)
+
+    set(BRIDGE_VERSION "1.0.0")
+    set(BRIDGE_PROTO_SOURCE "")
+    set(BRIDGE_PROTO_MODULE_NAMES "")
+
     message(STATUS "BRIDGE: Seaching for Modules")
 
     set(copied_proto_files "")
@@ -33,7 +39,6 @@ if (CONFIG_ZMK_BRIDGE)
 
 
     list(APPEND copied_proto_files "${bridge_main_proto}")
-    set (BRIDGE_PROTO_SOURCE "")
     foreach (file ${copied_proto_files})
         get_filename_component(proto_name ${file} NAME)
         set(BRIDGE_PROTO_SOURCE "${BRIDGE_PROTO_SOURCE}\\nfile:${proto_name}\\n")
@@ -43,7 +48,9 @@ if (CONFIG_ZMK_BRIDGE)
         string(REPLACE "\\" "\\\\" PROTO_SOURCE "${PROTO_SOURCE_RAW}")
         string(REPLACE "\"" "\\\"" PROTO_SOURCE "${PROTO_SOURCE}")
         string(REPLACE "\n" "\\n" PROTO_SOURCE "${PROTO_SOURCE}")
-
+        string(REPLACE ".proto" "" module_name "${proto_name}")
+        
+        set(BRIDGE_PROTO_MODULE_NAMES "${BRIDGE_PROTO_MODULE_NAMES}, ${module_name}")
         set(BRIDGE_PROTO_SOURCE "${BRIDGE_PROTO_SOURCE}${PROTO_SOURCE}")
     endforeach()
 
