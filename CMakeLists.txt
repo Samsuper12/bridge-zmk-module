@@ -47,15 +47,19 @@ if (CONFIG_ZMK_BRIDGE)
         string(REPLACE "\\" "\\\\" PROTO_SOURCE "${PROTO_SOURCE_RAW}")
         string(REPLACE "\"" "\\\"" PROTO_SOURCE "${PROTO_SOURCE}")
         string(REPLACE "\n" "\\n" PROTO_SOURCE "${PROTO_SOURCE}")
+
+        set(BRIDGE_PROTO_SOURCE "${BRIDGE_PROTO_SOURCE}${PROTO_SOURCE}")
+
         string(REPLACE ".proto" "" module_name "${proto_name}")
-        
-        if (BRIDGE_PROTO_MODULE_NAMES STREQUAL "")
-            set(BRIDGE_PROTO_MODULE_NAMES "${module_name}")
-        else()
-            set(BRIDGE_PROTO_MODULE_NAMES "${BRIDGE_PROTO_MODULE_NAMES}, ${module_name}")
+
+        if (NOT module_name STREQUAL "bridge")
+            if (BRIDGE_PROTO_MODULE_NAMES STREQUAL "")
+                set(BRIDGE_PROTO_MODULE_NAMES "${module_name}")
+            else()
+                set(BRIDGE_PROTO_MODULE_NAMES "${BRIDGE_PROTO_MODULE_NAMES}, ${module_name}")
+            endif()
         endif()
         
-        set(BRIDGE_PROTO_SOURCE "${BRIDGE_PROTO_SOURCE}${PROTO_SOURCE}")
     endforeach()
 
     configure_file(
