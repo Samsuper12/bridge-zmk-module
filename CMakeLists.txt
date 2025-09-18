@@ -80,7 +80,6 @@ if (CONFIG_ZMK_BRIDGE)
     zephyr_library_sources(
         src/bridge_uart.c
         src/subsystems/core.c
-        src/events/bridge_event.c
         src/util/uart_framing.c
     )
 endif()

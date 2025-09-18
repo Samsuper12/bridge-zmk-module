@@ -22,7 +22,6 @@
 LOG_MODULE_REGISTER(zmk_bridge, CONFIG_ZMK_BRIDGE_LOG_LEVEL);
 
 #include <zmk/bridge.h>
-#include <zmk/events/bridge_event.h>
 
 #define UART_DEVICE_NODE DT_CHOSEN(zmk_bridge_uart)
 
