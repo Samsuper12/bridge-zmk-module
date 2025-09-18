@@ -48,6 +48,19 @@ struct bridge_subsystem_handler {
             },                                                                                     \
     })
 
+#define BRIDGE_NOTIFICATION(subsys, _type, ...)                                                    \
+    ((bridge_Notification){                                                                        \
+        .which_subsystem = bridge_Response_##subsys##_tag,                                         \
+        .subsystem =                                                                               \
+            {                                                                                      \
+                .subsys =                                                                          \
+                    {                                                                              \
+                        .which_notification_type = bridge_##subsys##_Response_##_type##_tag,       \
+                        .notification_type = {._type = __VA_ARGS__},                               \
+                    },                                                                             \
+            },                                                                                     \
+    })
+
 #define BRIDGE_RESPONSE_SIMPLE(status)                                                             \
     ((bridge_Response){                                                                            \
         .request_status = status,                                                                  \
