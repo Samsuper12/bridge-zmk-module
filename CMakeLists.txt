@@ -86,4 +86,7 @@ if (CONFIG_ZMK_BRIDGE)
         src/subsystems/core.c
         src/util/uart_framing.c
     )
+
+    zephyr_library_sources_ifdef(CONFIG_ZMK_RGB_UNDERGLOW src/subsystems/underglow.c)
+
 endif()
