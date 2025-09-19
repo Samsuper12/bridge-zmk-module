@@ -35,9 +35,12 @@ static K_MUTEX_DEFINE(bridge_transport_mutex);
 
 static enum uart_framing_state bridge_framing_state;
 
-static struct bridge_subsystem_handler *find_subsystem_handler_for_choice(uint8_t choice) {
+static struct bridge_subsystem_handler *
+find_subsystem_handler_for_choice(const bridge_Request *req) {
+    const uint8_t subsystem = req->which_subsystem;
     STRUCT_SECTION_FOREACH(bridge_subsystem_handler, sub) {
-        if (sub->subsystem_choice == choice) {
+        if (sub->subsystem_choice == subsystem &&
+            sub->bridge_request_id(req) == sub->request_choice) {
             return sub;
         }
     }
@@ -229,13 +232,13 @@ static bridge_Response handle_request(const bridge_Request *req) {
         return resp;
     }
 
-    struct bridge_subsystem_handler *sub = find_subsystem_handler_for_choice(req->which_subsystem);
-    if (!sub) {
-        LOG_WRN("No subsystem found for choice %d", req->which_subsystem);
+    struct bridge_subsystem_handler *handler = find_subsystem_handler_for_choice(req);
+    if (!handler) {
+        LOG_WRN("No handler found for choice %d", req->which_subsystem);
         return BRIDGE_RESPONSE_SIMPLE(false);
     }
 
-    bridge_Response resp = sub->func(req);
+    bridge_Response resp = handler->func(req);
     return resp;
 }
 

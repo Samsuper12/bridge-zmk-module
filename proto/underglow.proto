@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+// bridge.underglow ["Request"]
+
+package bridge.underglow;
+
+message Color_RGB {
+    uint32 r = 1;
+    uint32 g = 2;
+    uint32 b = 3;
+}
+
+message Color_HSB {
+    uint32 h = 1;
+    uint32 s = 2;
+    uint32 b = 3;
+}
+
+enum RGB_cmd {
+    RGB_TOG = 0;
+    RGB_ON = 1;
+    RGB_OFF = 2;
+    RGB_HUI = 3;
+    RGB_HUD = 4;
+    RGB_SAI = 5;
+    RGB_SAD = 6;
+    RGB_BRI = 7;
+    RGB_BRD = 8;
+    RGB_SPI = 9;
+    RGB_SPD = 10;
+    RGB_EFF = 11;
+    RGB_EFR = 12;
+    RGB_EFS = 13;
+}
+
+message Request {
+    oneof request_type {
+        bool reset = 1;
+        RGB_cmd set_ug_cmd = 2;
+        Color_HSB set_hsb = 3;
+        Color_RGB set_rgb = 4;
+        uint32 set_brightness = 5;
+        uint32 set_saturation = 6;
+        uint32 set_hue = 7;
+    }
+}
